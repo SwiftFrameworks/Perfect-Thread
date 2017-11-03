@@ -1,3 +1,4 @@
+// swift-tools-version:4.0
 //
 //  Package.swift
 //  PerfectThread
@@ -22,19 +23,24 @@ import PackageDescription
 #if os(Linux)
 let package = Package(
     name: "PerfectThread",
-    targets: [],
-    dependencies: [
-        .Package(url: "https://github.com/PerfectlySoft/Perfect-LinuxBridge.git", majorVersion: 3)
+    products: [
+        .library(name: "PerfectThread", targets: ["PerfectThread"])
     ],
-    exclude: []
+    dependencies: [
+        .package(url: "https://github.com/SwiftFrameworks/Perfect-LinuxBridge.git", .branch("swift4"))
+    ],
+    targets: [
+        .target(name: "PerfectThread", dependencies: ["LinuxBridge"], path: ".", sources: ["Sources"])
+    ]
 )
 #else
 let package = Package(
     name: "PerfectThread",
-    targets: [],
-    dependencies: [
-
+    products: [
+        .library(name: "PerfectThread", targets: ["PerfectThread"])
     ],
-    exclude: []
+    targets: [
+        .target(name: "PerfectThread", path: ".", sources: ["Sources"])
+    ]
 )
 #endif
